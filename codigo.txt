@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+int menu();
+
+typedef struct{ //struct com nome dadosCliente, com varias informeçoes
+    int codigo;
+    char nome[100];
+    double cpf;
+    char sexo;
+}dadosCliente;
+
+dadosCliente /* <- tipo da função*/lerClientes();//crio uma função do tipo que vou retornar é a struct chamada (dados clientes), com nome de ler clientes
+
+void exibirCliente(dadosCliente lc); //função sem retorno chamada (exibirCliente) para retornar todos dados lidos, e recebe os parametros de dadosCliente
+
+
+int main()
+{
+    dadosCliente mostrarDadosCliente[3]; //crio uma vetor do tipo struct(dadosCliente) e chamo ela de mostrarDadosClientes
+
+    int respostaMenu = 0;//retorno da função menu guardado nessa variavel
+    int i = 0;//contador
+
+    printf("Ola, esse eh o programa do seu mercado digital!!\n\n");
+        respostaMenu = menu();
+
+        if(respostaMenu == 1){
+            for(i=0; i < 3; i++){//for para capturar os dados de cada cliente de uma vez guardando em vetor
+                printf("\nInforme os dados do cliente %d", i);
+                mostrarDadosCliente[i] = lerClientes(); //variavel mostrarDadosCliente recebe todas informações da função lerClientes do tipo dadosCliente(struct)
+                printf("----------------------------\n");
+            }
+            for(i=0; i < 3; i++){
+                printf("\nDados do cliente %d", i); //for para mostrar os dados de cada cliente de uma vez que estavam em um vetor
+                exibirCliente(mostrarDadosCliente[i]); //chamo a função exibirClientes e ela mostra as informações que esta em mostrarDadosCliente
+                printf("----------------------------\n");
+            }
+        }
+
+
+
+    return 0;
+}
+
+//menu do trabalho mercado digital
+int menu(){
+    int escolhaMenuUsuario = 0;
+    do{
+    printf("----------------------------\n");
+    printf("Menu mercado digital\n");
+    printf("0 - para finalizar o programa.\n");
+    printf("1 - para cadastrar cliente.\n");
+    printf("2 - para cadastrar produto.\n");
+    printf("3 - para listar cliente cadastrados.\n");
+    printf("4 - para efetuar uma venda.\n");
+    printf("----------------------------\n\n");
+    printf("\nEscolha uma opcao, oque voce gostaria de fazer? ");
+    scanf("%d", &escolhaMenuUsuario);
+        if(escolhaMenuUsuario > 5 || escolhaMenuUsuario< 0){
+            printf("\nAtencao:\nESSA OPCAO NAO EH VALIDA, TENTE NOVAMENTE!!\n\n");
+        }
+    }while(escolhaMenuUsuario > 5 || escolhaMenuUsuario < 0);
+
+    return escolhaMenuUsuario;
+
+}
+//funçao do tipo dadosCliente(struct) com nome lerClientes guardado todas informações da struct e retorno ela dps pra quem chamar
+dadosCliente lerClientes(){
+
+    dadosCliente lC;
+    printf("\n\ndigite o seu nome: ");
+    fgets(lC.nome, 100, stdin);
+    printf("\nDigite o cpf: ");
+    scanf("%lf", &lC.cpf);
+    return lC;
+}
+
+//como não consigo exibir uma struct no printf, criei uma função que exibi item por item da struct, que recebe o parametros de dadosClientes, e dps exibo
+void exibirCliente(dadosCliente lC){
+    printf("\n\tO nome eh: %s\n", lC.nome);
+    printf("\tO cpf eh: %0.0lf\n\n", lC.cpf);
+
+}
